@@ -1,6 +1,6 @@
 # JRouterHarmonyOs
 
-鸿蒙路由框架，使用hvigor插件代码生成模版，支持跨模块通信，实现代码解耦。
+鸿蒙路由框架，使用hvigor插件生成模版，支持跨模块通信，实现代码解耦。
 
 ### 功能
 
@@ -40,10 +40,10 @@
 2. 在模块的**hvigorfile.ts**文件中添加对应插件
 
    ```ts
-   import { harTasks } from '@ohos/hvigor-ohos-plugin';
+   import { hapTasks } from '@ohos/hvigor-ohos-plugin';
    import {hapPlugin} from '@mufans/router-plugin';
    export default {
-       system: harTasks,  /* Built-in plugin of Hvigor. It cannot be modified. */
+       system: hapTasks,  /* Built-in plugin of Hvigor. It cannot be modified. */
        plugins:[hapPlugin()]         /* Custom plugin to extend the functionality of Hvigor. */
    }
    
@@ -54,10 +54,10 @@
        plugins:[harPlugin()]         /* Custom plugin to extend the functionality of Hvigor. */
    }
    
-   import { harTasks } from '@ohos/hvigor-ohos-plugin';
+   import { hspTasks } from '@ohos/hvigor-ohos-plugin';
    import {hspPlugin} from '@mufans/router-plugin';
    export default {
-       system: harTasks,  /* Built-in plugin of Hvigor. It cannot be modified. */
+       system: hspTasks,  /* Built-in plugin of Hvigor. It cannot be modified. */
        plugins:[hspPlugin()]         /* Custom plugin to extend the functionality of Hvigor. */
    }
    ```
