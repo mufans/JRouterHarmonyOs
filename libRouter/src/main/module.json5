@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "libRouter",
+    "type": "har",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}

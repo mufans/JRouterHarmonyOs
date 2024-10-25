@@ -1,0 +1,5 @@
+{
+  disablePlugin: false,
+  root: 'demo',
+  dirs: ['src/main/ets/pages']
+}
