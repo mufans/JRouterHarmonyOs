@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.OhosPluginId=void 0;class OhosPluginId{}exports.OhosPluginId=OhosPluginId,OhosPluginId.OHOS_APP_PLUGIN="com.ohos.app",OhosPluginId.OHOS_HAP_PLUGIN="com.ohos.hap",OhosPluginId.OHOS_HAR_PLUGIN="com.ohos.har",OhosPluginId.OHOS_HSP_PLUGIN="com.ohos.hsp";

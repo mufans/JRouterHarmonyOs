@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.CorePluginBuilder=void 0;class CorePluginBuilder{constructor(e){this.module=e}createModuleModel(e,o){const r=e.getModuleModelByName(this.module.getName());return r.moduleBuildProfileCheck(o),r.processTargetsConfig(),r}}exports.CorePluginBuilder=CorePluginBuilder;
