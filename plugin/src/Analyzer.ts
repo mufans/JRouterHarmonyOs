@@ -43,7 +43,7 @@ export class Analyzer {
             return;
         }
         const sourceCode = FileUtil.readFileSync(this.mPath).toString();
-        Logger.info("start resolve sourceCode" + sourceCode);
+        Logger.info("start resolve sourceCode" + this.mPath);
         const sourceFile = ts.createSourceFile(this.mPath, sourceCode, ts.ScriptTarget.ES2021, false);
         ts.forEachChild(sourceFile, node => {
             this.resolveNode(node);
@@ -76,7 +76,6 @@ export class Analyzer {
         const pageUrl = this.mResult.path as SpecializedType;
         if (pageUrl.type === "constant") {
             const path = this.resolveConstPath(pageUrl.name);
-            Logger.info("const variable path" + path);
             if (path) {
                 const constSourceFile = createSourceFile(path);
                 if (constSourceFile) {
@@ -118,7 +117,6 @@ export class Analyzer {
     }
 
     private resolveNode(node: ts.Node) {
-        Logger.info("start resolveNode" + node.kind);
         if (ts.isImportDeclaration(node)) {
             this.resolveImportDeclaration(node);
         } else if (ts.isMissingDeclaration(node)) {
@@ -171,8 +169,6 @@ export class Analyzer {
         // 类名赋值
         this.mResult.className = className;
 
-        Logger.info("resolveClass" + className);
-
         // 类解析开始
         node.modifiers?.forEach(modifier => {
             this.resolveNode(modifier);
@@ -187,10 +183,8 @@ export class Analyzer {
     // 解析装饰器
     private resolveDecorator(node: ts.Decorator) {
 
-        Logger.info("resolveDecorator");
         if (ts.isCallExpression(node.expression)) {
             const callExpression = node.expression as ts.CallExpression;
-            Logger.info("callExpression" + callExpression.expression);
             if (ts.isIdentifier(callExpression.expression)) {
                 this.switchIdentifier(callExpression);
             }
@@ -251,7 +245,6 @@ export class Analyzer {
      */
     private resolveProperty(initializer: ts.Expression) {
         let value: any = "";
-        Logger.info("start resolve property" + initializer.kind);
         if (ts.isIdentifier(initializer)) {
             value = {
                 type: "constant",
@@ -281,7 +274,6 @@ export class Analyzer {
 
     private switchIdentifier(callExpression: ts.CallExpression) {
         const identifier = callExpression.expression as ts.Identifier;
-        Logger.info("identifier text" + identifier.text);
         if (this.mResult && Constant.ANNOTATION.some(item => item === identifier.text)) {
             this.mResult.annotation = identifier.text;
             this.mResult.srcPath = this.mNodePath;

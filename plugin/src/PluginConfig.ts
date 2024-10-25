@@ -14,7 +14,6 @@ export function readPluginConfig(dir:string):PluginConfig{
     while(dirLevel<4){
         let path = FileUtil.pathResolve(dir,Constant.PARENT_DIR.repeat(dirLevel)+Constant.CONFIG_FILE_NAME);
         if (FileUtil.exist(path)){
-            Logger.info(`${path} exit`)
             configPath = path;
             break;
         }
@@ -22,7 +21,6 @@ export function readPluginConfig(dir:string):PluginConfig{
     }
     let config = {}
     if(configPath){
-        Logger.info("start readPluginConfig file"+configPath);
         config = FileUtil.readJson5(configPath);
     }
     return config;

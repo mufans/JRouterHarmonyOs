@@ -28,7 +28,6 @@ export class PluginManager implements RoutePluginProvider {
 
     constructor() {
         hvigor.nodesEvaluated((arg) => {
-            Logger.info("plugin size " + this.mPluginCache.size);
             const harMoudleNames: string[] = [];
             this.mHarHandler.forEach((handler) => {
                 harMoudleNames.push(handler.getModuleName());

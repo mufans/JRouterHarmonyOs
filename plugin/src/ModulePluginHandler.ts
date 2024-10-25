@@ -65,7 +65,6 @@ export class ModulePluginHandler {
                 packages.push(name)
             }
         });
-        Logger.info("packages" + packages.toString());
         this.mContext.setBuildProfileOpt(buildProfileOpt);
     }
 
@@ -102,8 +101,6 @@ export class ModulePluginHandler {
         }
 
         this.mFiles = listFiles(...dirs);
-
-        Logger.info("start analyze code..." + this.mFiles.length);
 
         this.mFiles.forEach((path) => {
             const annalyzer = new Analyzer(this.mNode.getNodeName(), path, this.mConfig);
@@ -174,7 +171,6 @@ export class ModulePluginHandler {
             }
         })
         const templateModel: TemplateModel = new TemplateModel(this.mNode.getNodeName(), routes, routeImports);
-        Logger.info("writeRouteMap" + JSON.stringify(templateModel));
         const templateContent = FileUtil.readFileSync(this.getTplFilePath()).toString();
         // 注册模版函数
         Handlebars.registerHelper('eq', function (arg1, arg2, options) {
