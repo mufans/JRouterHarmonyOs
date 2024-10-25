@@ -64,9 +64,9 @@
 
    
 
-3. 在项目根目录或者模块目录添加配置文件 **router_config.json ** , 插件优先读取当前目录的配置
+3. 在项目根目录或者模块目录添加配置文件**router_config.json **, 插件优先读取当前目录的配置
 
-```json
+```ts
 {
   disablePlugin: false, // 是否禁用插件
   root: 'demo', // 模块的根目录，默认目录无需配置
