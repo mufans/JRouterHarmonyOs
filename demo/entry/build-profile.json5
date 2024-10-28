@@ -4,11 +4,6 @@
     {
       "name": "release",
       "arkOptions": {
-        "runtimeOnly": {
-          "packages": [
-            "testLib"
-          ]
-        },
         "obfuscation": {
           "ruleOptions": {
             "enable": false,
