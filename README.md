@@ -175,7 +175,9 @@
 ```ts
     RouterWrapper.init(this.context, {
       entry: () => {
-        // routeMap为hap generate下的routemap, 框架使用了动态导入实现命名路由，由于hap无法被其他模块引用，所以这里手动添加
+        // routeMap为hap generate下的routemap, 框架使用了动态导入实现命名路由，
+        // 由于hap无法被其他模块引用，所以这里手动添加。
+        // 如hap模块没有路由则无需配置
         return routeMap; 
       }
     });
