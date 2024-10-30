@@ -14,6 +14,10 @@
 
 - path支持跨模块静态变量
 
+#### 1.0.3
+
+- 修复跨模块跳转hap模块页面的问题
+
 ### 功能
 
 - 跨模块命名路由跳转（基于@ohos.router)
@@ -30,7 +34,7 @@
    {
      "modelVersion": "5.0.0",
      "dependencies": {
-       "@mufans/router-plugin": "file:../plugin/lib/mufans-router-plugin-1.0.1.tgz" // 插件包
+       "@mufans/router-plugin": "file:../plugin/lib/mufans-router-plugin-1.0.2.tgz" // 插件包
      },
      "execution": {
        // "daemon": true,                          /* Enable daemon compilation. Default: true */

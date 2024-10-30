@@ -9,11 +9,19 @@ import { IRouteMap, JRouteType, RouterWrapper } from '@mufans/jrouter'
 import lazy { GlobalInterceptor } from '../pages/GlobalInterceptor'
 import lazy { SpecialInterceptor } from '../pages/SpecialInterceptor'
 import lazy { TestService2Impl } from '../pages/TestService2Impl'
+import('../pages/EntryPage2')
+import('../pages/Index')
 
 export const routeMap: IRouteMap = {
   name: 'entry',
   createRoute: (): void => {
-        RouterWrapper.registerInterceptor({
+        RouterWrapper.register({
+          srcPath: 'entry/src/main/ets/pages/EntryPage2',
+          type: JRouteType.PAGE,
+          path: 'entry_page2',
+          interceptors: []
+        })
+              RouterWrapper.registerInterceptor({
           srcPath: 'entry/src/main/ets/pages/GlobalInterceptor',
           path: 'GlobalInterceptor',
           priority: 0,
@@ -25,7 +33,7 @@ export const routeMap: IRouteMap = {
         RouterWrapper.register({
           srcPath: 'entry/src/main/ets/pages/Index',
           type: JRouteType.PAGE,
-          path: 'entry',
+          path: 'entry_page',
           interceptors: []
         })
               RouterWrapper.registerInterceptor({

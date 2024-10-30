@@ -2,12 +2,11 @@ import { JRouter, RouterWrapper } from '@mufans/jrouter';
 import { ITestService } from 'baseLib/src/main/ets/service/ITestService'
 import { Constants } from 'baseLib/src/main/ets/const/Constants'
 import { TEST_PAGE } from 'baseLib/src/main/ets/const/Const'
-import { router } from '@kit.ArkUI';
 
-@JRouter({ path: Constants.PAGE_ENTRY })
-@Entry({ routeName: Constants.PAGE_ENTRY })
+@JRouter({ path: Constants.PAGE_ENTRY2 })
+@Entry({ routeName: Constants.PAGE_ENTRY2 })
 @Component
-struct Index {
+export struct EntryPage2 {
   build() {
     RelativeContainer() {
       Text(Constants.PAGE_ENTRY)
@@ -43,7 +42,7 @@ struct Index {
         .onClick(() => {
           RouterWrapper.pushNamedRoute({ name: Constants.TEST_PAGE2 });
         })
-      Button('open entry page2 in entry')
+      Button('open entry page in entry')
         .id('open')
         .fontSize(20)
         .margin({ top: 20 })
@@ -53,8 +52,7 @@ struct Index {
           middle: { anchor: 'nav2', align: HorizontalAlign.Center }
         })
         .onClick(() => {
-          // router.pushNamedRoute({name:Constants.PAGE_ENTRY2 })
-          RouterWrapper.pushNamedRoute({ name: Constants.PAGE_ENTRY2 });
+          RouterWrapper.pushNamedRoute({ name: Constants.PAGE_ENTRY });
         })
       Button("invoke TestService in testLib")
         .id('getService')

@@ -9,6 +9,9 @@ import { IRouteMap, JRouteType, RouterWrapper } from '@mufans/jrouter'
 {{#routeImport}}
 import lazy { {{name}} } from '{{srcPath}}'
 {{/routeImport}}
+{{#entryImport}}
+import('{{srcPath}}')
+{{/entryImport}}
 
 export const routeMap: IRouteMap = {
   name: '{{routeMapName}}',

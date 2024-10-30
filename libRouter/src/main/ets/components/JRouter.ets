@@ -101,26 +101,27 @@ export class JRouter {
     }
     const interceptorInfos = this.interceptorHandler.queryInterceptorInfos(routeInfo);
 
-    for(let i=0;i<interceptorInfos.length;i++){
+    for (let i = 0; i < interceptorInfos.length; i++) {
       let interceptorInfo = interceptorInfos[i];
       let interceptor = await this.findServiceAsync<IInterceptor>(interceptorInfo.path);
       if (interceptor) {
-        this.interceptorHandler.addInterceptor(interceptorInfo,interceptor);
+        this.interceptorHandler.addInterceptor(interceptorInfo, interceptor);
       }
     }
 
     const result = await this.interceptorHandler.intercept(options);
-    if (result.terminal){
+    if (result.terminal) {
       return;
     }
 
     // 查询是否需要导包
-    if (!this.belongsToEntry(routeInfo) && !this.importRouteMap.has(routeInfo.path)) {
+    if ( !this.importRouteMap.has(routeInfo.path)) {
       return import(routeInfo.srcPath).then((value: object) => {
         this.importRouteMap.set(routeInfo.path, routeInfo);
         return router.pushNamedRoute(options);
       }).catch((error: Error) => {
         console.log(error.message)
+        return router.pushNamedRoute(options)
       })
     }
 

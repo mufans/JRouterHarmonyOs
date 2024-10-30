@@ -1,9 +1,9 @@
 import { JProvider } from '@mufans/jrouter';
-import {ITestService} from 'baseLib/src/main/ets/components/ITestService'
+import {ITestService} from 'baseLib/src/main/ets/service/ITestService'
 import { ToastUtil } from 'baseLib/src/main/ets/utils/ToastUtils';
-
+import {Constants} from 'baseLib/src/main/ets/const/Constants'
 @JProvider({
-  path: "TestService",
+  path: Constants.TEST_SERVICE,
   singleton: false
 })
 export class TestService implements ITestService {

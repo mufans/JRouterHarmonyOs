@@ -5,7 +5,7 @@ import { listFiles } from './common/CommonFileUtils'
 import { Logger } from "./common/Logger";
 import { Constant } from "./common/Constant";
 import Handlebars from "handlebars";
-import { TemplateImport, TemplateModel, TemplateRoute } from "./TemplateModel";
+import { EntryImport, TemplateImport, TemplateModel, TemplateRoute } from "./TemplateModel";
 import { OhosHapContext, OhosHarContext, OhosHspContext, OhosPluginId } from '@ohos/hvigor-ohos-plugin';
 import { PluginManager } from "./PluginManager";
 import { RouteMap } from "./RouteProcessor";
@@ -13,6 +13,8 @@ import { PackageJson5 } from "./PackageJson5";
 
 // 模块插件处理
 export class ModulePluginHandler {
+    // 插件id
+    private mPluginId: string;
     // 节点
     private mNode: HvigorNode;
 
@@ -30,7 +32,8 @@ export class ModulePluginHandler {
     private mPackageInfo: PackageJson5 | undefined = undefined;
 
 
-    constructor(node: HvigorNode, context: OhosHapContext | OhosHarContext | OhosHspContext, config: PluginConfig) {
+    constructor(pluginId: string, node: HvigorNode, context: OhosHapContext | OhosHarContext | OhosHspContext, config: PluginConfig) {
+        this.mPluginId = pluginId;
         this.mNode = node;
         this.mContext = context;
         this.mConfig = config;
@@ -108,13 +111,13 @@ export class ModulePluginHandler {
 
         Logger.info(`read ${this.mNode.getNodeName()} oh-package.json5`);
         this.mPackageInfo = FileUtil.readJson5(FileUtil.pathResolve(this.mNode.getNodeDir().filePath + "/" + Constant.OH_PACKAGE));
-        if(this.mPackageInfo?.dependencies){
+        if (this.mPackageInfo?.dependencies) {
             this.mPackageInfo.dependencies = new Map(Object.entries(this.mPackageInfo.dependencies));
         }
         Logger.info(`result: ${JSON.stringify(this.mPackageInfo)}`);
 
         this.mFiles.forEach((path) => {
-            const annalyzer = new Analyzer(this.mNode.getNodeName(),this.mNode.getNodeDir().filePath, path, this.mConfig, this.mPackageInfo!);
+            const annalyzer = new Analyzer(this.mNode.getNodeName(), this.mNode.getNodeDir().filePath, path, this.mConfig, this.mPackageInfo!);
             annalyzer.start();
             const result = annalyzer.getResult();
             if (result) {
@@ -172,6 +175,17 @@ export class ModulePluginHandler {
                 interceptors: JSON.stringify(value.interceptors)
             }
         });
+        let entryImports: EntryImport[] = []
+        if (this.mPluginId == OhosPluginId.OHOS_HAP_PLUGIN) {
+            entryImports = routes.filter((route)=>{
+                return route.type === Constant.PAGE
+            }).map((route) => {
+                return {
+                    // routemap.ets相对路径
+                    srcPath: ".." + route.srcPath.split(Constant.TEMPLATE_SRC_ROOT_PATH)[1]
+                }
+            })
+        }
         const routeImports: TemplateImport[] = routes.filter((route) => {
             return route.factory && route.factory.length > 0;
         }).map((route) => {
@@ -181,7 +195,7 @@ export class ModulePluginHandler {
                 srcPath: ".." + route.srcPath.split(Constant.TEMPLATE_SRC_ROOT_PATH)[1]
             }
         })
-        const templateModel: TemplateModel = new TemplateModel(this.mNode.getNodeName(), routes, routeImports);
+        const templateModel: TemplateModel = new TemplateModel(this.mNode.getNodeName(), routes, routeImports, entryImports);
         const templateContent = FileUtil.readFileSync(this.getTplFilePath()).toString();
         // 注册模版函数
         Handlebars.registerHelper('eq', function (arg1, arg2, options) {

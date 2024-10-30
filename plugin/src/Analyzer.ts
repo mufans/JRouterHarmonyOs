@@ -162,7 +162,6 @@ export class Analyzer {
             }
             let sourcePath: string | null = null;
             if (depDir) {
-                Logger.error(`resolveConstPath ${this.mNodeDir}  ${depDir + p.substring(p.indexOf("/"), p.length)}`);
                 // 跨模块常量
                 sourcePath = FileUtil.pathResolve(this.mNodeDir, depDir + p.substring(p.indexOf("/"), p.length));
             } else {

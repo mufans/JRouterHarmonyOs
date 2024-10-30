@@ -130,7 +130,7 @@ export class PluginManager implements RoutePluginProvider {
             const id = PluginManager.getOhPluginId(pluginId);
             const context = node.getContext(id);
             Logger.info(`reigister plugin of module [${nodeName}]`);
-            PluginManager.getInstance().register(pluginId, new ModulePluginHandler(node, context, config));
+            PluginManager.getInstance().register(pluginId, new ModulePluginHandler(id, node, context, config));
         } else {
             Logger.info(`[${nodeName}] plugin has bean disabled`)
         }
