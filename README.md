@@ -30,7 +30,7 @@
    {
      "modelVersion": "5.0.0",
      "dependencies": {
-       "@mufans/router-plugin": "file:../plugin/lib/mufans-router-plugin-1.0.1.tgz" // 插件包
+       "@mufans/router-plugin": "file:../plugin/lib/mufans-router-plugin-1.0.2.tgz" // 插件包
      },
      "execution": {
        // "daemon": true,                          /* Enable daemon compilation. Default: true */
