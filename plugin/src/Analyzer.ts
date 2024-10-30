@@ -1,6 +1,6 @@
 import { FileUtil, HvigorNode } from '@ohos/hvigor'
 import { PluginConfig } from './PluginConfig'
-import ts, { idText } from 'typescript'
+import ts, { Declaration, Expression, Identifier, idText, StringLiteral, StringLiteralLike } from 'typescript'
 import { Constant } from './common/Constant';
 import { Logger } from './common/Logger';
 import { createSourceFile } from './common/CommonFileUtils';
@@ -91,6 +91,14 @@ export class Analyzer {
                     this.replaceConstant(constSourceFile, pageUrl);
                 }
             }
+        } else if (pageUrl.type === "object") {
+            const path = this.resolveConstPath(pageUrl.name);
+            if (path) {
+                const constSourceFile = createSourceFile(path);
+                if (constSourceFile) {
+                    this.replaceObject(constSourceFile, pageUrl);
+                }
+            }
         }
         Logger.info("after final Process :" + JSON.stringify(this.mResult));
     }
@@ -109,6 +117,22 @@ export class Analyzer {
                     }
                     return;
                 }
+            });
+        });
+    }
+
+    private replaceObject(constSourceFile: ts.SourceFile, pageUrl: SpecializedType) {
+        ts.forEachChild(constSourceFile, node => {
+            if (!ts.isClassDeclaration(node) || node.name?.escapedText.toString() !== pageUrl.name) {
+                return;
+            }
+            node.members.forEach(member => {
+                // @ts-ignore
+                if (member.name?.escapedText.toString() === pageUrl.property) {
+                    // @ts-ignore
+                    this.mResult!.path = member.initializer.text;
+                    return
+                };
             });
         });
     }
@@ -284,7 +308,14 @@ export class Analyzer {
                 type: "constant",
                 name: initializer.escapedText.toString()
             };
-        } else if (ts.isNumericLiteral(initializer)) {
+        } else if (ts.isPropertyAccessExpression(initializer)) {
+            value = {
+                type: "object", // 对象
+                name: (initializer.expression as Identifier).escapedText,
+                property: initializer.name.escapedText
+            };
+        }
+        else if (ts.isNumericLiteral(initializer)) {
             value = parseInt(initializer.text);
         } else if (ts.isStringLiteral(initializer)) {
             value = initializer.text;
@@ -353,7 +384,8 @@ export interface RouteInfo {
 
 export interface SpecializedType {
     type: string,
-    name: string
+    name: string,
+    property?: string
 }
 
 export type AnnoArgType = string | number | boolean | SpecializedType

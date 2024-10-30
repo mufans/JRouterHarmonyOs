@@ -1,7 +1,8 @@
 import { JRouter, RouterWrapper } from '@mufans/jrouter';
 import {ITestService} from 'baseLib/src/main/ets/components/ITestService'
+import {Constants} from 'baseLib/src/main/ets/const/Constants'
 
-@JRouter({path:"entry"})
+@JRouter({path:Constants.PAGE_ENTRY})
 @Entry({routeName:"entry"})
 @Component
 struct Index {
