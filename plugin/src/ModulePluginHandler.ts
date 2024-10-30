@@ -9,6 +9,7 @@ import { TemplateImport, TemplateModel, TemplateRoute } from "./TemplateModel";
 import { OhosHapContext, OhosHarContext, OhosHspContext, OhosPluginId } from '@ohos/hvigor-ohos-plugin';
 import { PluginManager } from "./PluginManager";
 import { RouteMap } from "./RouteProcessor";
+import { PackageJson5 } from "./PackageJson5";
 
 // 模块插件处理
 export class ModulePluginHandler {
@@ -24,6 +25,9 @@ export class ModulePluginHandler {
     private mFiles: string[] = [];
 
     private mAnalyzeResultSet: RouteInfo[] = [];
+
+    // 包配置
+    private mPackageInfo: PackageJson5 | undefined = undefined;
 
 
     constructor(node: HvigorNode, context: OhosHapContext | OhosHarContext | OhosHspContext, config: PluginConfig) {
@@ -102,8 +106,15 @@ export class ModulePluginHandler {
 
         this.mFiles = listFiles(...dirs);
 
+        Logger.info(`read ${this.mNode.getNodeName()} oh-package.json5`);
+        this.mPackageInfo = FileUtil.readJson5(FileUtil.pathResolve(this.mNode.getNodeDir().filePath + "/" + Constant.OH_PACKAGE));
+        if(this.mPackageInfo?.dependencies){
+            this.mPackageInfo.dependencies = new Map(Object.entries(this.mPackageInfo.dependencies));
+        }
+        Logger.info(`result: ${JSON.stringify(this.mPackageInfo)}`);
+
         this.mFiles.forEach((path) => {
-            const annalyzer = new Analyzer(this.mNode.getNodeName(), path, this.mConfig);
+            const annalyzer = new Analyzer(this.mNode.getNodeName(),this.mNode.getNodeDir().filePath, path, this.mConfig, this.mPackageInfo!);
             annalyzer.start();
             const result = annalyzer.getResult();
             if (result) {

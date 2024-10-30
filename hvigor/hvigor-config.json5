@@ -1,7 +1,7 @@
 {
   "modelVersion": "5.0.0",
   "dependencies": {
-    "@mufans/router-plugin": "file:../plugin/lib/mufans-router-plugin-1.0.0.tgz"
+    "@mufans/router-plugin": "file:../plugin/lib/mufans-router-plugin-1.0.1.tgz"
   },
   "execution": {
     // "daemon": true,                          /* Enable daemon compilation. Default: true */

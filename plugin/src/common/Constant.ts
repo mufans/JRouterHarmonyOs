@@ -9,7 +9,11 @@ export class Constant {
     // 配置文件
     public static readonly CONFIG_FILE_NAME: string = "router_config.json5"
 
+    // ets文件后缀
     public static readonly SCAN_FILE_SUFFIX = ".ets"
+
+    // 模块配置
+    public static readonly OH_PACKAGE = "oh-package.json5"
 
     // 注解类型
     public static readonly ANNOTATION_PAGE = "JRouter";

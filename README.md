@@ -2,6 +2,16 @@
 
 鸿蒙路由框架，使用hvigor插件生成模版，支持跨模块通信，实现代码解耦。
 
+
+
+### 更新日志 (Changelog)
+
+#### 1.0.1
+
+- 常量支持跨模块
+
+
+
 ### 功能
 
 - 跨模块命名路由跳转（基于@ohos.router)
@@ -18,7 +28,7 @@
    {
      "modelVersion": "5.0.0",
      "dependencies": {
-       "@mufans/router-plugin": "file:../plugin/lib/mufans-router-plugin-1.0.0.tgz" // 插件包
+       "@mufans/router-plugin": "file:../plugin/lib/mufans-router-plugin-1.0.1.tgz" // 插件包
      },
      "execution": {
        // "daemon": true,                          /* Enable daemon compilation. Default: true */

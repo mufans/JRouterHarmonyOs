@@ -4,6 +4,7 @@ import ts, { idText } from 'typescript'
 import { Constant } from './common/Constant';
 import { Logger } from './common/Logger';
 import { createSourceFile } from './common/CommonFileUtils';
+import { PackageJson5 } from './PackageJson5';
 
 interface NodeInfo {
     key: string,
@@ -14,12 +15,17 @@ export class Analyzer {
 
     private mNodeName: string;
 
+    private mNodeDir: string;
+
     private mNodePath: string;
 
     private mPath: string;
 
     // 配置
     private mConfig: PluginConfig;
+
+    // 包配置信息
+    private mPackageInfo: PackageJson5;
 
     // 解析结果
     private mResult: RouteInfo | undefined;
@@ -30,11 +36,14 @@ export class Analyzer {
     // 导包信息
     private mImportMap: Map<string, string[]> = new Map();
 
-    constructor(nodeName: string, path: string, config: PluginConfig) {
+
+    constructor(nodeName: string, nodeDir: string, path: string, config: PluginConfig, packageInfo: PackageJson5) {
         this.mNodeName = nodeName;
+        this.mNodeDir = nodeDir;
         this.mPath = path;
         this.mNodePath = path.substring(path.indexOf(nodeName), path.length).split(".ets")[0];
         this.mConfig = config;
+        this.mPackageInfo = packageInfo;
     }
 
 
@@ -113,7 +122,32 @@ export class Analyzer {
                 return;
             }
         });
-        return path ? FileUtil.pathResolve(this.mPath.substring(0, this.mPath.lastIndexOf("/")), path) : null;
+        if (!path) {
+            return null;
+        } else {
+            const p: string = path!
+            let depDir: string | undefined = undefined // 依赖模块路径
+            if (p.includes("/")) {
+                const pathRoot = p.split("/")[0]
+                this.mPackageInfo.dependencies.forEach((value, key) => {
+                    if (key === pathRoot) {
+                        depDir = value.split("file:")[1];
+                        return;
+                    }
+                });
+            }
+            let sourcePath: string | null = null;
+            if (depDir) {
+                Logger.error(`resolveConstPath ${this.mNodeDir}  ${depDir + p.substring(p.indexOf("/"), p.length)}`);
+                // 跨模块常量
+                sourcePath = FileUtil.pathResolve(this.mNodeDir, depDir + p.substring(p.indexOf("/"), p.length));
+            } else {
+                // 常量当前模块内部
+                sourcePath = FileUtil.pathResolve(this.mPath.substring(0, this.mPath.lastIndexOf("/")), path)
+            }
+            Logger.info(`resolveConstPath ${constName} in ${sourcePath}`);
+            return sourcePath;
+        }
     }
 
     private resolveNode(node: ts.Node) {

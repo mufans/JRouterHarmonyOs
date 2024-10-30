@@ -1,5 +1,5 @@
 import { JRouter, RouterWrapper } from '@mufans/jrouter';
-import { TEST_PAGE } from './Const';
+import { TEST_PAGE } from 'baseLib/src/main/ets/const/Const';
 import { ITestService2 } from 'baseLib/src/main/ets/components/ITestService2'
 
 @JRouter({ path: TEST_PAGE,interceptors:["SpecialInterceptor"] })
