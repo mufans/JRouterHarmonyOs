@@ -42,14 +42,26 @@ export struct EntryPage2 {
         .onClick(() => {
           RouterWrapper.pushNamedRoute({ name: Constants.TEST_PAGE2 });
         })
+      Button('go to test page3 in testLib2')
+        .id('nav3')
+        .fontSize(20)
+        .fontWeight(FontWeight.Bold)
+        .margin({ top: 20 })
+        .alignRules({
+          top: { anchor: 'nav2', align: VerticalAlign.Bottom },
+          middle: { anchor: 'nav2', align: HorizontalAlign.Center }
+        })
+        .onClick(() => {
+          RouterWrapper.pushNamedRoute({ name: Constants.TEST_PAGE3 });
+        })
       Button('open entry page in entry')
         .id('open')
         .fontSize(20)
         .margin({ top: 20 })
         .fontWeight(FontWeight.Bold)
         .alignRules({
-          top: { anchor: 'nav2', align: VerticalAlign.Bottom },
-          middle: { anchor: 'nav2', align: HorizontalAlign.Center }
+          top: { anchor: 'nav3', align: VerticalAlign.Bottom },
+          middle: { anchor: 'nav3', align: HorizontalAlign.Center }
         })
         .onClick(() => {
           RouterWrapper.pushNamedRoute({ name: Constants.PAGE_ENTRY });

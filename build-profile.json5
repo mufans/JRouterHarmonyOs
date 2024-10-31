@@ -43,6 +43,10 @@
     {
       "name": "baseLib",
       "srcPath": "./demo/baseLib"
+    },
+    {
+      "name": "testLib2",
+      "srcPath": "./demo/testLib2"
     }
   ]
 }
