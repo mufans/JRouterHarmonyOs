@@ -115,7 +115,7 @@ export class JRouter {
     }
 
     // 查询是否需要导包
-    if ( !this.importRouteMap.has(routeInfo.path)) {
+    if (!this.belongsToEntry(routeInfo) && !this.importRouteMap.has(routeInfo.path)) {
       return import(routeInfo.srcPath).then((value: object) => {
         this.importRouteMap.set(routeInfo.path, routeInfo);
         return router.pushNamedRoute(options);

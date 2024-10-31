@@ -1,8 +1,7 @@
 import { JRouter, RouterWrapper } from '@mufans/jrouter';
-import { ITestService } from 'baseLib/src/main/ets/service/ITestService'
-import { Constants } from 'baseLib/src/main/ets/const/Constants'
-import { TEST_PAGE } from 'baseLib/src/main/ets/const/Const'
-import { router } from '@kit.ArkUI';
+import { ITestService } from 'baseLib/src/main/ets/service/ITestService';
+import { Constants } from 'baseLib/src/main/ets/const/Constants';
+import { TEST_PAGE } from 'baseLib/src/main/ets/const/Const';
 
 @JRouter({ path: Constants.PAGE_ENTRY })
 @Entry({ routeName: Constants.PAGE_ENTRY })

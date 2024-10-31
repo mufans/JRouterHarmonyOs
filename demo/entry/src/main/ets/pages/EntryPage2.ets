@@ -9,7 +9,7 @@ import { TEST_PAGE } from 'baseLib/src/main/ets/const/Const'
 export struct EntryPage2 {
   build() {
     RelativeContainer() {
-      Text(Constants.PAGE_ENTRY)
+      Text(Constants.PAGE_ENTRY2)
         .fontSize(20)
         .id("title")
         .fontWeight(FontWeight.Bold)
