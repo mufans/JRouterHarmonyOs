@@ -1,7 +1,7 @@
 {
   "app": {
-    "bundleName": "com.example.plugin",
-    "vendor": "example",
+    "bundleName": "com.github.mufans",
+    "vendor": "mufans",
     "versionCode": 1000000,
     "versionName": "1.0.0",
     "icon": "$media:app_icon",
